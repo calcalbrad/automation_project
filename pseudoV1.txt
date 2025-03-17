@@ -1,0 +1,26 @@
+1. Parse the PDF file and convert from image to text
+2. Create a copy of the master spreadsheet
+	- title using following format: MAKE, MODEL, REGISTRATION .xclx
+3. Parse the following to the corresponding cells
+	- REPAIRER to H2
+	- OWNER to H8
+	- VEHICLE
+		- YEAR to C3
+		- MAKE to C4
+		- MODEL to C5
+	- REGISTRATION to C6
+	- CLAIM # to C2
+
+
+**************************** WORK IN PROCESS ****************************************
+
+4. FOR EACH TYPE of LABOUR excluding SUBLET
+	a. add item to type, numbers? and description
+	b. BREAK when reach SubTotal e.g. SubTotal $ $518.50 > $452.00
+		- add left number to QUOTED AMOUNT
+		- add right number to ASSESSED AMOUNT
+5. FOR EACH in SUBLET
+	a. add item to type, description
+	b. IF QUOTED AMOUNT or ASSESSED AMOUNT = 0
+		replace with 'Inc'
+		else put the number
