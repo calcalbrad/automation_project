@@ -1,3 +1,6 @@
+# Automation Project
+Will add the README in due course but for now using this as a drafting space
+
 Exception 
  - Programmatic Access to Visual Basic Project is not trusted
 
