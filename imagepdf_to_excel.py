@@ -1,5 +1,6 @@
 import pytesseract
 import pandas as pd
+import openpyxl
 
 from pdf2image import convert_from_path
 
@@ -17,18 +18,17 @@ def extract_text_from_pdf(pdf_path):
     return text
 
         
-def process_text_to_dataframe(text, excel_path):
-    df = pd.read_excel(excel_path, engine='openpyxl')
+def append_text_to_workbook(text, excel_path):    
+    workbook = openpyxl.load_workbook(excel_path)
+    sheet = workbook.active
     
-
-def save_to_excel(df, output_file):
-    df.to_excel(output_file, index=False) 
+    # insert text_to_excel reference here
     
-
-def main(pdf_path, excel_path, master_doc_path): # add output_path to parameters
+    
+def main(pdf_path, excel_path):
     text = extract_text_from_pdf(pdf_path)    
-    df = process_text_to_dataframe(text, excel_path)
-    # save_to_excel (df, output_path)
+    workbook = append_text_to_workbook(text, excel_path)
+    workbook.save(excel_path)
 
 if __name__ == "__main__":
-    main("data/KNZ151 Quote.pdf", "test.xlsm") # add output file
+    main("data/KNZ151 Quote.pdf", "test.xlsm")
