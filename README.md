@@ -14,6 +14,7 @@ Notes
 
 Instructions
  - Need to manually copy and paste the Master Spreadsheet, as I cannot do it programmitcally due to the loss of the Data Validation on the spreadsheet.
+ - Need to run powershell as administator for it to run
 
 GUI
  - Tkinter
