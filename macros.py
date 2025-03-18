@@ -1,7 +1,7 @@
 import xlwings as xw
 
 def call_macro(marco, workbook: xw.Book):
-    #add logic to define macros here
+    #add logic to know which macro to call here
     workbook.save()
 
 def call_add_labour_detail_line_macro(workbook: xw.Book):
