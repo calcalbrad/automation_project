@@ -1,6 +1,7 @@
 import pytesseract
 import pandas as pd
 import openpyxl
+import xlwings as xw
 
 from pdf2image import convert_from_path
 
@@ -19,10 +20,11 @@ def extract_text_from_pdf(pdf_path):
 
         
 def append_text_to_workbook(text, excel_path):    
-    workbook = openpyxl.load_workbook(excel_path)
-    sheet = workbook.active
-    
-    # insert text_to_excel reference here
+    with xw.App(visible=True) as app:
+        workbook = app.books.open(excel_path)
+        sheet = workbook.sheets[0]
+        
+        # insert text_to_excel reference here
     
     
 def main(pdf_path, excel_path):
