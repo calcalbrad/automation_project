@@ -35,9 +35,7 @@ def parse_claim_number():
     
     
 def extract_description(row):
-    pattern = r"^\d+\.\s([^\d@$]+?)(?:\s[@$]|\s\d|\s\(|$)"
-    
-    # Note - missing RF indicator/parking lamp
+    pattern = r"^\d+\.\s([^\d@$]*(?:\d*\w+[^@$]*))(?:\s[@$]|\s\d|\s\(|$)"
     
     # need to add handler for "SubTotal $"
     
