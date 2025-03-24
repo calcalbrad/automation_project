@@ -35,9 +35,7 @@ def parse_claim_number():
     
     
 def extract_description(row):
-    pattern = r"^\d+\.\s([^\d]+)(?=\s\d+\.\d+)" # need to improve
-    
-    # need to not print a row if it is blank
+    pattern = r"^\d+\.\s(.*?)(?:\s[@$]|\s\d|\s\(|$)"
     
     # need to add handler for "SubTotal $"
     
@@ -45,22 +43,25 @@ def extract_description(row):
     if match:
         return match.group(1).strip()
     else:
+        print("Returning None")
         return None
     
     
 def print_row(row):    
-    append_to_cell("A"+str(current_row), current_category)
-    
+    global current_row
     description = extract_description(row)
+    
     if description:
+        append_to_cell("A"+str(current_row), current_category)
         append_to_cell("B"+str(current_row), description)
         print(description)
+        
+        current_row += 1
     
     
 def text_to_excel(sheet: xw.Sheet, text): 
     global global_sheet
     global global_text
-    global current_row
     
     global_sheet = sheet
     global_text = text
@@ -68,6 +69,8 @@ def text_to_excel(sheet: xw.Sheet, text):
     for line in text.splitlines():
         if line:
             line.strip()
+            
+            print(line)
               
             match = category_pattern.match(line)
             if match:
@@ -75,5 +78,4 @@ def text_to_excel(sheet: xw.Sheet, text):
                 current_category = match.group(1)
             elif current_category:
                 print_row(line)
-                current_row += 1
     
