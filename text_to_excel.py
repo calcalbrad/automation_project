@@ -35,7 +35,9 @@ def parse_claim_number():
     
     
 def extract_description(row):
-    pattern = r"^\d+\.\s(.*?)(?:\s[@$]|\s\d|\s\(|$)"
+    pattern = r"^\d+\.\s([^\d@$]+?)(?:\s[@$]|\s\d|\s\(|$)"
+    
+    # Note - missing RF indicator/parking lamp
     
     # need to add handler for "SubTotal $"
     
@@ -68,6 +70,8 @@ def text_to_excel(sheet: xw.Sheet, text):
     
     for line in text.splitlines():
         if line:
+            # based on error case I found with OCR
+            line = re.sub(r"^(\d+),", r"\1.", line)
             line.strip()
             
             print(line)
