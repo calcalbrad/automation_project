@@ -21,7 +21,7 @@ def extract_text_from_pdf(pdf_path):
 def append_text_to_workbook(text, excel_path):    
     with xw.App(visible=True) as app:
         workbook = app.books.open(excel_path)
-        text_to_excel(workbook.sheets[0], text)
+        text_to_excel(workbook, text)
         workbook.save()
     
     
