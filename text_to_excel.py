@@ -7,7 +7,12 @@ categories = ["RR", "Repair", "Paint", "Part", "Sublet"]
 current_category = None
 category_pattern = re.compile(r"^(RR|Repair|Paint|Part|Sublet):")
 
-current_total_padding = 0
+start_rows = {
+    "Labour": 17,
+    "Paint": 26,
+    "Part": 36,
+    "Sublet": 45
+}
 
 total_labour_items = 0
 total_paint_items = 0
@@ -42,62 +47,57 @@ def parse_claim_number():
     
     
 def handle_labour_category(row):
-    global current_total_padding
+    global start_rows
     global total_labour_items
     
     if total_labour_items > 5:
         # call_add_labour_detail_line_macro()
-        current_total_padding += 1
+        start_rows["Paint"] += 1
+        start_rows["Part"] += 1
+        start_rows["Sublet"] += 1
         
-    row_to_append = 17 + total_labour_items
-    print("Row to Append: "+str(row_to_append)+"; Total Labour Items: "+str(total_labour_items)+"; Total Padding: "+str(current_total_padding)+";")
-        
-    print_row(row, "B"+str(row_to_append), "C"+str(row_to_append))
+    row_to_append = start_rows["Labour"] + total_labour_items        
+    print_row(row, "C", row_to_append)
     total_labour_items += 1
     
 
 def handle_paint_category(row):
-    global current_total_padding
+    global start_rows
     global total_paint_items
     
     if total_paint_items > 5:
         # call_add_paint_detail_line_macro()
-        current_total_padding += 1
+        start_rows["Part"] += 1
+        start_rows["Sublet"] += 1
         
-    row_to_append = 26 + total_paint_items + current_total_padding
-    print("Row to Append: "+str(row_to_append)+"; Total Paint Items: "+str(total_paint_items)+"; Total Padding: "+str(current_total_padding)+";")
-        
-    print_row(row, "B"+str(row_to_append), "C"+str(row_to_append))
+    row_to_append = start_rows["Paint"] + total_paint_items        
+    print_row(row, "C", row_to_append)
     total_paint_items += 1
     
     
 def handle_parts_category(row):
-    global current_total_padding
+    global start_rows
     global total_part_items
     
     if total_part_items > 5:
         # call_add_paint_detail_line_macro()
-        current_total_padding += 1
+        start_rows["Sublet"] += 1
         
-    row_to_append = 36 + total_part_items + current_total_padding
-    print("Row to Append: "+str(row_to_append)+"; Total Part Items: "+str(total_part_items)+"; Total Padding: "+str(current_total_padding)+";")
-        
-    print_row(row, "B"+str(row_to_append), "D"+str(row_to_append))
+    row_to_append = start_rows["Part"] + total_part_items        
+    print_row(row, "D", row_to_append)
     total_part_items += 1
     
     
 def handle_sublet_category(row):
-    global current_total_padding
+    global start_rows
     global total_sublet_items
-    
+        
     if total_sublet_items > 5:
         # call_add_paint_detail_line_macro()
-        current_total_padding += 1
+        print()
         
-    row_to_append = 45 + total_sublet_items + current_total_padding
-    print("Row to Append: "+str(row_to_append)+"; Total Sublet Items: "+str(total_sublet_items)+"; Total Padding: "+str(current_total_padding)+";")
-        
-    print_row(row, "B"+str(row_to_append), "D"+str(row_to_append)) # Need to remove category from this one
+    row_to_append = start_rows["Sublet"] + total_sublet_items        
+    print_row(row, "D", row_to_append)
     total_sublet_items += 1
     
         
@@ -121,9 +121,9 @@ def sort_row_into_categories(row):
 def extract_description(row):
     pattern = r"^\d+\.\s([^\d@$]*(?:\d*\w+[^@$]*))(?:\s[@$]|\s\d|\s\(|$)"
     
-    # need to add handler for "(not required)"
+    # TODO - need to add handler for "(not required)"
     
-    # need to add handler for "SubTotal $"
+    # TODO - need to add handler for "SubTotal $"
     
     match = re.search(pattern, row)
     if match:
@@ -132,13 +132,14 @@ def extract_description(row):
         return None
     
     
-def print_row(row, cell1, cell2):    
-    global current_row
+def print_row(row, description_column_letter, row_number):    
+    global current_category
     description = extract_description(row)
     
     if description:
-        append_to_cell(cell1, current_category)
-        append_to_cell(cell2, description)
+        if current_category in ["RR", "Repair", "Paint"]:
+            append_to_cell("B"+str(row_number), current_category)
+        append_to_cell(description_column_letter+str(row_number), description)
     
     
 def text_to_excel(workbook: xw.Book, text): 
