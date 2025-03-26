@@ -30,4 +30,4 @@ def main(pdf_path, excel_path):
     append_text_to_workbook(text, excel_path)
 
 if __name__ == "__main__":
-    main("data/KNZ151 Quote.pdf", "test.xlsx")
+    main("data/KNZ151 Quote.pdf", "test.xlsm")
