@@ -46,11 +46,12 @@ def append_claim_number(claim_number):
     
 #TODO - need to add macro calls to each of these
 def handle_labour_category(row):
+    global global_workbook
     global start_rows
     global total_labour_items
     
-    if total_labour_items > 5:
-        # call_add_labour_detail_line_macro()
+    if total_labour_items >= 5:
+        call_add_labour_detail_line_macro(global_workbook)
         start_rows["Paint"] += 1
         start_rows["Part"] += 1
         start_rows["Sublet"] += 1
@@ -63,12 +64,13 @@ def handle_labour_category(row):
     
     
 def handle_repair_category(row):
+    global global_workbook
     global start_rows
     global total_labour_items
     global total_repair_items
     
-    if (total_labour_items + total_repair_items) > 5:
-        # call_add_labour_detail_line_macro()
+    if (total_labour_items + total_repair_items) >= 5:
+        call_add_labour_detail_line_macro(global_workbook)
         start_rows["Paint"] += 1
         start_rows["Part"] += 1
         start_rows["Sublet"] += 1
@@ -79,11 +81,12 @@ def handle_repair_category(row):
 
 
 def handle_paint_category(row):
+    global global_workbook
     global start_rows
     global total_paint_items
     
-    if total_paint_items > 5:
-        # call_add_paint_detail_line_macro()
+    if total_paint_items >= 5:
+        call_add_paint_detail_line_macro(global_workbook)
         start_rows["Part"] += 1
         start_rows["Sublet"] += 1
         
@@ -93,11 +96,12 @@ def handle_paint_category(row):
     
     
 def handle_parts_category(row):
+    global global_workbook
     global start_rows
     global total_part_items
     
-    if total_part_items > 5:
-        # call_add_paint_detail_line_macro()
+    if total_part_items >= 5:
+        call_add_parts_detail_line_macro(global_workbook)
         start_rows["Sublet"] += 1
         
     row_to_append = start_rows["Part"] + total_part_items        
@@ -106,15 +110,15 @@ def handle_parts_category(row):
     
     
 def handle_sublet_category(row):
+    global global_workbook
     global start_rows
     global total_sublet_items
         
-    if total_sublet_items > 5:
-        # call_add_paint_detail_line_macro()
-        print()
+    if total_sublet_items >= 5:
+        call_add_sublet_detail_line_macro(global_workbook)
         
     row_to_append = start_rows["Sublet"] + total_sublet_items        
-    print_row(row, "D", row_to_append)
+    print_row(row, "E", row_to_append)
     total_sublet_items += 1
         
 
@@ -250,9 +254,11 @@ def read_through_text(text):
     
     
 def text_to_excel(workbook: xw.Book, text): 
+    global global_workbook
     global global_sheet
     global global_text
     
+    global_workbook = workbook
     global_sheet = workbook.sheets[0]
     global_text = text
     
