@@ -23,11 +23,3 @@ def append_text_to_workbook(text, excel_path):
         workbook = app.books.open(excel_path)
         text_to_excel(workbook, text)
         workbook.save()
-    
-    
-def main(pdf_path, excel_path):
-    text = extract_text_from_pdf(pdf_path)    
-    append_text_to_workbook(text, excel_path)
-
-if __name__ == "__main__":
-    main("data/KNZ151 Quote.pdf", "test.xlsm")
