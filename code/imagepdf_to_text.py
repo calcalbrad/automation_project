@@ -16,10 +16,3 @@ def extract_text_from_pdf(pdf_path):
         text += pytesseract.image_to_string(image, config=custom_config)
         
     return text
-
-        
-def append_text_to_workbook(text, excel_path):    
-    with xw.App(visible=True) as app:
-        workbook = app.books.open(excel_path)
-        text_to_excel(workbook, text)
-        workbook.save()
