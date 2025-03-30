@@ -2,7 +2,6 @@ import pytesseract
 import xlwings as xw
 
 from pdf2image import convert_from_path
-from text_to_excel import text_to_excel
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
