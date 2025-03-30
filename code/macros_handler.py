@@ -1,6 +1,5 @@
 import xlwings as xw
 
-# TODO - add error handling
 
 def call_add_labour_detail_line_macro(workbook: xw.Book):
     try:
