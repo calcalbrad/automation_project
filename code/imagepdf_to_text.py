@@ -1,5 +1,4 @@
 import pytesseract
-import xlwings as xw
 
 from pdf2image import convert_from_path
 
