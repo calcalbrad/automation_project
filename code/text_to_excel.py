@@ -1,7 +1,7 @@
 import re
 import xlwings as xw
 
-from macros import *
+from macros_handler import *
 
 current_category = None
 
@@ -44,7 +44,6 @@ def append_claim_number(claim_number):
     append_to_cell("C2", claim_number)
     
     
-#TODO - need to add macro calls to each of these
 def handle_labour_category(row):
     global global_workbook
     global start_rows
