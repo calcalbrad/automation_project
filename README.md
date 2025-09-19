@@ -71,7 +71,7 @@ pip install -r requirements.txt
 
 ### 2. Run the Program via PowerShell
 - Right-click PowerShell shortcut > **Run as Administrator**
-- Double-click `start-app.ps1` to start the application
+- Right-click `start-app.ps1` and select 'Run with PowerShell' to start the application
 - Select the PDF you wish to convert
 - Select the copied master spreadsheet
 - Click the `Convert` button
